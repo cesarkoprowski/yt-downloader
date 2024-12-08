@@ -4,6 +4,8 @@ from pywebio.input import input
 from pywebio.output import put_html, clear, put_processbar, set_processbar, scroll_to
 import validators
 import time
+import tkinter as tk
+from tkinter import filedialog
 
 def progress_hook(d):
     """Callback to update the progress bar."""
@@ -17,11 +19,15 @@ def progress_hook(d):
     elif d['status'] == 'finished':
         set_processbar('progress', 1)  # Complete bar
 
+def get_download_path():
+    root = tk.Tk()
+    root.withdraw()  # Esconde a janela principal do Tkinter
+    folder_selected = filedialog.askdirectory(title="Select Folder")
+    return folder_selected
+
 def video_download():
-    # Here, you have to enter the destination path (where you will save the files)
-    path_to_download = Path(r"")
-    path_to_download.mkdir(parents=True, exist_ok=True)
-    
+    path_to_download = get_download_path()
+
     while True:
         # Shows title
         clear()  # Clear main page
